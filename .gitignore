@@ -1,0 +1,9 @@
+*
+
+!.gitignore
+!.dockerignore
+!.env
+!docker-compose.yml
+!*.Dockerfile
+!*-entrypoint.sh
+

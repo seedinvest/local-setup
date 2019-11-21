@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  si-services:
+    image: si-services
+    container_name: si_services
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - redis
+      - rabbit-mq
+
+  si-web-app:
+    image: si-web-app
+    container_name: si_web_app
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - si-services
+
+  postgres:
+    image: postgres:12.0
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ${POSTGRES_SETUP_DIR}:/docker-entrypoint-initdb.d
+      - ${POSTGRES_DATA_DIR}:/pgdata
+
+  pg-admin:
+    image: dpage/pgadmin4:4.15
+    container_name: pg_admin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_USER}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASSWORD}
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "True"
+      PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 10
+    ports:
+      - 5050:80
+    volumes:
+      - ${PG_ADMIN_DATA_DIR}:/var/lib/pgadmin
+      - ${POSTGRES_SETUP_DIR}:/var/lib/pgadmin/storage/${PG_ADMIN_USER}
+
+  redis:
+    image: redis:5.0.6
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  rabbit-mq:
+    image: rabbitmq:3.8.1
+    container_name: rabbit_mq
+    restart: always
+    ports:
+      - 5672:5672
+
