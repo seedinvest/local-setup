@@ -12,7 +12,8 @@ RUN apt-get update \
     zlib1g-dev \
     libmagickwand-dev \
     software-properties-common \
-    geoip-bin
+    geoip-bin \
+    postgresql-client
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \ 
   && apt-get install nodejs -y
