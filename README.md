@@ -24,9 +24,9 @@ To run the stack locally you will need to perform a couple steps
 - Run `ssh-add` to ensure your SSH identity can be used by Docker to retrieve packages on build
 - Build the required docker containers for SeedInvest and Web App
   - At the top level of the project run the following
-    1 `export DOCKER_BUILDKIT=1`
-    2 `docker build --ssh default -f web.Dockerfile -t si-web-app .`
-    3 `docker build --ssh default -f si.Dockerfile -t si-services .`
+    - `export DOCKER_BUILDKIT=1`
+    - `docker build --ssh default -f web.Dockerfile -t si-web-app .`
+    - `docker build --ssh default -f si.Dockerfile -t si-services .`
 - Next, ask someone nicely for an up to date SQL file to populate the database with
   - Make a directory called `.db_init` and place this file inside that directory
   
