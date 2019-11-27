@@ -4,9 +4,10 @@ services:
   si-services:
     image: si-services
     container_name: si_services
-    restart: always
     ports:
       - 8000:8000
+    volumes:
+      - ./seedinvest/seedinvest:/code/seedinvest
     depends_on:
       - postgres
       - redis
@@ -15,9 +16,10 @@ services:
   si-web-app:
     image: si-web-app
     container_name: si_web_app
-    restart: always
     ports:
       - 8080:8080
+    volumes:
+      - ./webapp/siwebapp/siwebapp:/code/siwebapp/siwebapp
     depends_on:
       - si-services
 
