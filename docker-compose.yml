@@ -18,8 +18,6 @@ services:
     container_name: si_web_app
     ports:
       - 8080:8080
-    volumes:
-      - ./webapp/siwebapp/siwebapp:/code/siwebapp/siwebapp
     depends_on:
       - si-services
 
