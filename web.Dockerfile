@@ -36,7 +36,7 @@ RUN cd /code
 RUN pip install -r requirements.txt
 RUN --mount=type=ssh pip install -r si_requirements.txt
 
-COPY webapp /code/
+ADD ./webapp/ /code/
 
 COPY si-web-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/si-web-entrypoint.sh

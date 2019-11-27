@@ -10,6 +10,6 @@ do
     sleep 10s
 done
 
-./manage.py runserver 0.0.0.0:8000 --settings=seedinvest.settings.local_common
+python manage.py runserver 0.0.0.0:8000 --settings=seedinvest.settings.local_common
 
 exec "$@"

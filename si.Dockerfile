@@ -13,7 +13,7 @@ RUN apt-get update \
     libmagickwand-dev \
     software-properties-common \
     geoip-bin \
-    postgresql-client
+    postgresql-client 
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \ 
   && apt-get install nodejs -y
@@ -26,6 +26,11 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN mkdir /code
 WORKDIR /code
 
+RUN mkdir fieldkeys
+RUN pip install python-keyczar
+RUN keyczart create --location=fieldkeys --purpose=crypt
+RUN keyczart addkey --location=fieldkeys --status=primary
+
 COPY seedinvest/requirements.txt /code/
 COPY seedinvest/si_requirements.txt /code/
 COPY seedinvest/package.json /code/
@@ -36,7 +41,7 @@ RUN --mount=type=ssh  npm install
 RUN pip install -r requirements.txt
 RUN --mount=type=ssh pip install -r si_requirements.txt
 
-COPY seedinvest /code/
+ADD ./seedinvest/ /code/
 
 COPY si-services-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/si-services-entrypoint.sh
